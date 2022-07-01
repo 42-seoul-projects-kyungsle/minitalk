@@ -1,0 +1,16 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "cppdbg",
+      "request": "launch",
+      "args": [],
+      "stopAtEntry": true,
+      "externalConsole": false,
+      "cwd": "/Users/ksnotebook/Desktop/gitdir/42_C_Subjects/Circle2/minitalk",
+      "program": "/Users/ksnotebook/Desktop/gitdir/42_C_Subjects/Circle2/minitalk/build/Debug/outDebug",
+      "MIMode": "gdb"
+    }
+  ]
+}
