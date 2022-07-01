@@ -30,6 +30,7 @@
   ],
   "files.associations": {
     "*.js": "javascriptreact",
-    "minitalk.h": "c"
+    "minitalk.h": "c",
+    "libft.h": "c"
   }
 }
