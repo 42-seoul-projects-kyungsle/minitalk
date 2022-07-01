@@ -6,7 +6,7 @@
 /*   By: kyungsle <kyungsle@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 15:38:55 by kyungsle          #+#    #+#             */
-/*   Updated: 2022/07/01 22:43:29 by kyungsle         ###   ########.fr       */
+/*   Updated: 2022/07/01 22:51:49 by kyungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ int	main(int argc, char **argv)
 
 	sa.sa_flags = SA_SIGINFO;
 	sa.sa_sigaction = client_handler;
-	if (sigaction(SIGUSR1, &sa, NULL) == -1 ||
-	sigaction(SIGUSR2, &sa, NULL) == -1)
+	if (sigaction(SIGUSR1, &sa, NULL) == -1
+		|| sigaction(SIGUSR2, &sa, NULL) == -1)
 		exit_print_error(1);
 	if (argc == 3)
 		send_with_bit(ft_atoi(argv[1]), argv[2]);

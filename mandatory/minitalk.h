@@ -6,16 +6,16 @@
 /*   By: kyungsle <kyungsle@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 15:57:23 by kyungsle          #+#    #+#             */
-/*   Updated: 2022/07/01 21:52:16 by kyungsle         ###   ########.fr       */
+/*   Updated: 2022/07/01 22:52:13 by kyungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINITALK_H
 # define MINITALK_H
 
-#include <unistd.h>
-#include <signal.h>
-#include "../libft/libft.h"
+# include <unistd.h>
+# include <signal.h>
+# include "../libft/libft.h"
 
 typedef struct s_signal
 {
@@ -23,7 +23,5 @@ typedef struct s_signal
 	int				size;
 	int				pid;
 }					t_signal;
-
-t_signal			g_signal;
 
 #endif

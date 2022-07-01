@@ -6,11 +6,13 @@
 /*   By: kyungsle <kyungsle@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 15:38:57 by kyungsle          #+#    #+#             */
-/*   Updated: 2022/07/01 22:43:26 by kyungsle         ###   ########.fr       */
+/*   Updated: 2022/07/01 22:52:39 by kyungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
+
+t_signal	g_signal;
 
 void	exit_print_error(int i)
 {
@@ -53,8 +55,8 @@ int	main(void)
 	g_signal.msg = 0;
 	sa.sa_flags = SA_SIGINFO;
 	sa.sa_sigaction = server_handler;
-	if (sigaction(SIGUSR1, &sa, NULL) == -1 ||
-		sigaction(SIGUSR2, &sa, NULL) == -1)
+	if (sigaction(SIGUSR1, &sa, NULL) == -1
+		|| sigaction(SIGUSR2, &sa, NULL) == -1)
 		exit_print_error(1);
 	pid = getpid();
 	ft_putstr_fd("Process ID is ", 1);
