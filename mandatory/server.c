@@ -6,7 +6,7 @@
 /*   By: kyungsle <kyungsle@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 15:38:57 by kyungsle          #+#    #+#             */
-/*   Updated: 2022/07/01 22:52:39 by kyungsle         ###   ########.fr       */
+/*   Updated: 2022/07/01 23:05:16 by kyungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	get_with_bit(int sig)
 	g_signal.size++;
 	g_signal.msg = g_signal.msg >> 1;
 	if (sig == SIGUSR2)
-		g_signal.msg = g_signal.msg | 128;
+		g_signal.msg = g_signal.msg | 0b10000000;
 	if (g_signal.size == 8)
 	{
 		write(1, &(g_signal.msg), 1);

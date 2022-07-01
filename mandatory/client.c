@@ -6,7 +6,7 @@
 /*   By: kyungsle <kyungsle@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 15:38:55 by kyungsle          #+#    #+#             */
-/*   Updated: 2022/07/01 22:51:49 by kyungsle         ###   ########.fr       */
+/*   Updated: 2022/07/01 23:03:44 by kyungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	exit_print_error(int i)
 	if (i == 1)
 		ft_putstr_fd("Error getting message from server.\n", 1);
 	if (i == 2)
-		ft_putstr_fd("You have to enter right arguments!\n", 1);
+		ft_putstr_fd("You have to enter right arguments.\n", 1);
 	exit(1);
 }
 
@@ -27,22 +27,24 @@ void	send_with_bit(int pid, char *argv)
 {
 	size_t	len;
 	size_t	i;
-	int		shift;
+	int		move;
 
 	len = ft_strlen(argv);
 	i = 0;
 	while (i <= len)
 	{
-		shift = 0;
-		while (shift < 8)
+		move = 0;
+		while (move < 8)
 		{
-			if ((argv[i] >> shift) & 1)
+			if ((argv[i] >> move) & 1)
+			{
 				if (kill(pid, SIGUSR2) == -1)
 					exit_print_error(0);
+			}
 			else
 				if (kill(pid, SIGUSR1) == -1)
 					exit_print_error(0);
-			shift++;
+			move++;
 			usleep(300);
 		}
 		i++;
