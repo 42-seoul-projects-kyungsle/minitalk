@@ -1,57 +1,74 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    makefile                                           :+:      :+:    :+:    #
+#    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: kyungsle <kyungsle@student.42.kr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/01 15:19:20 by kyungsle          #+#    #+#              #
-#    Updated: 2022/07/01 15:30:22 by kyungsle         ###   ########.fr        #
+#    Updated: 2022/07/01 19:19:00 by kyungsle         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC		= cc
-RM		= rm -f
+.DEFAULT_GOAL = all
+
+SRCS_FILES = server.c client.c
+
+SRCS_OBJS = $(SRCS_FILES:.c=.o)
+
+BONUS_FILES = server_bonus.c client_bonus.c
+
+BONUS_OBJS = ${BONUS_FILES:.c=.o}
+
+CC	= cc
+
+RM	= rm -f
+
 CFLAGS	= -Wall -Wextra -Werror
-CLIENT = client
+
+LIB	= libft
+
+NAME = ${SERVER} ${CLIENT}
+
 SERVER = server
-CLIENTB = client_bonus
-SERVERB = server_bonus
-NAME	= $(CLIENT) $(SERVER)
-BONUS	= $(CLIENTB) $(SERVERB)
-SRCS	= ./mandatory/so_long.c \
-		  ./mandatory/image.c \
-SRCSB	= ./bonus/so_long_bonus.c \
-		  ./bonus/image_bonus.c \
-		  ./bonus/ft_itoa.c
-OBJS	= $(SRCS:.c=.o)
-OBJSB	= $(SRCSB:.c=.o)
-MLX_DIR	= ./mlx/
 
-%.o:%.c
-	$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
+CLIENT = client
 
-$(NAME): $(OBJS)
-	make -C $(MLX_DIR)
-	$(CC) -o $(NAME) $(OBJS) -L./mlx -lmlx -framework OpenGL -framework AppKit
+NAME_B = ${SERVER_B} ${CLIENT_B}
 
-$(BONUS): $(OBJSB)
-	make -C $(MLX_DIR)
-	$(CC) -o $(BONUS) $(OBJSB) -L./mlx -lmlx -framework OpenGL -framework AppKit
+SERVER_B = server_b
 
-all: $(NAME)
+CLIENT_B = client_b
 
-bonus: $(BONUS)
+${SERVER}: server.o ./libft/libft.a
+	gcc ${CFLAGS} -o ${SERVER}  server.o -L${LIB} -lft
 
+${CLIENT}: client.o ./libft/libft.a
+	gcc ${CFLAGS} -o ${CLIENT}  client.o -L${LIB} -lft
+
+${SERVER_B}: server_bonus.o ./libft/libft.a
+	gcc ${CFLAGS} -o ${SERVER}  server_bonus.o -L${LIB} -lft
+
+${CLIENT_B}: client_bonus.o ./libft/libft.a
+	gcc ${CFLAGS} -o ${CLIENT}  client_bonus.o -L${LIB} -lft
+	
+all: ${NAME}
+
+%.o: %.c
+	${CC} -c ${CFLAGS} $?
+
+./libft/libft.a:
+	make -C libft/
+	
 clean:
-	make -C $(MLX_DIR) clean
-	$(RM) $(OBJS) $(OBJSB)
+	${RM} $(SRCS_OBJS) ${BONUS_OBJS}
+	make -C libft clean
 
 fclean: clean
-	$(RM) $(NAME) $(BONUS)
+	${RM} ${NAME} ${NAME_B} ${LIB}/libft.a
 
-re: 
-	make fclean
-	make all
+bonus: ${NAME_B}
 
-.PHONY: all clean fclean re bonus
+re: fclean all
+
+.PHONY: all libft clean fclean re bonus

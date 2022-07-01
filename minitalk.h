@@ -6,25 +6,24 @@
 /*   By: kyungsle <kyungsle@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 15:57:23 by kyungsle          #+#    #+#             */
-/*   Updated: 2022/07/01 16:04:44 by kyungsle         ###   ########.fr       */
+/*   Updated: 2022/07/01 17:56:12 by kyungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINITALK_H
 # define MINITALK_H
 
-# include <signal.h>
-# include <sys/types.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <stdio.h>
+#include <unistd.h>
+#include <signal.h>
+#include "./libft/libft.h"
 
 typedef struct s_signal
 {
-	unsigned int	bit;
-	char			symbol;
+	unsigned char	msg;
+	int				size;
 	int				pid;
 }					t_signal;
-t_signal			g_bites;
+
+t_signal			g_signal;
 
 #endif
