@@ -6,7 +6,7 @@
 #    By: kyungsle <kyungsle@student.42.kr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/01 15:19:20 by kyungsle          #+#    #+#              #
-#    Updated: 2022/07/01 23:40:32 by kyungsle         ###   ########.fr        #
+#    Updated: 2022/07/01 23:45:47 by kyungsle         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ SERVERB	= server_bonus
 BONUS	= $(CLIENTB) $(SERVERB)
 SRCS	= ./mandatory/client.c
 SRCS2	= ./mandatory/server.c
-SRCSB	= ./bonus/client_bonus.C
+SRCSB	= ./bonus/client_bonus.c
 SRCSB2	= ./bonus/server_bonus.c
 OBJS	= $(SRCS:.c=.o)
 OBJS2	= $(SRCS2:.c=.o)
