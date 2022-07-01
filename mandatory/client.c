@@ -6,7 +6,7 @@
 /*   By: kyungsle <kyungsle@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 15:38:55 by kyungsle          #+#    #+#             */
-/*   Updated: 2022/07/01 19:51:38 by kyungsle         ###   ########.fr       */
+/*   Updated: 2022/07/01 21:58:23 by kyungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	send_with_bit(int pid, char *argv)
 
 	len = ft_strlen(argv);
 	i = 0;
-	while (i < len)
+	while (i <= len)
 	{
 		shift = 0;
 		while (shift < 8)
@@ -36,28 +36,31 @@ void	send_with_bit(int pid, char *argv)
 	}
 }
 
-// void	client_handler(int signo, siginfo_t *info, void *context)
-// {
-// 	(void)context;
-// 	(void)signo;
-// 	if (signo == SIGUSR1 || signo == SIGUSR2)
-// 	{
-// 		ft_putstr_fd("Process success : ", 1);
-// 		ft_putnbr_fd(info->si_signo, 1);
-// 	}
-// }
+void	client_handler(int signo, siginfo_t *info, void *context)
+{
+	(void)context;
+	(void)info;
+	if (signo == SIGUSR2)
+	{
+		ft_putstr_fd("Process success from ", 1);
+		ft_putnbr_fd(info->si_pid, 1);
+		write(1, "\n", 1);
+		exit(0);
+	}
+}
 
 int	main(int argc, char **argv)
 {
-	pid_t	pid;
+	struct sigaction	sa;
 
+	sa.sa_flags = SA_SIGINFO;
+	sa.sa_sigaction = client_handler;
+	sigaction(SIGUSR1, &sa, NULL);
+	sigaction(SIGUSR2, &sa, NULL);
 	if (argc == 3)
-	{
-		pid = ft_atoi(argv[1]);
-		send_with_bit(pid, argv[2]);
-	}
+		send_with_bit(ft_atoi(argv[1]), argv[2]);
 	else
-		write(1, "You have to enter right arguments.\n", 2);
+		write(1, "You have to enter right arguments!\n", 2);
 	while (1)
 		pause();
 	return (0);

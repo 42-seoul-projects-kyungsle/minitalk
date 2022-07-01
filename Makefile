@@ -6,69 +6,57 @@
 #    By: kyungsle <kyungsle@student.42.kr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/01 15:19:20 by kyungsle          #+#    #+#              #
-#    Updated: 2022/07/01 19:19:00 by kyungsle         ###   ########.fr        #
+#    Updated: 2022/07/01 22:23:32 by kyungsle         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-.DEFAULT_GOAL = all
-
-SRCS_FILES = server.c client.c
-
-SRCS_OBJS = $(SRCS_FILES:.c=.o)
-
-BONUS_FILES = server_bonus.c client_bonus.c
-
-BONUS_OBJS = ${BONUS_FILES:.c=.o}
-
-CC	= cc
-
-RM	= rm -f
-
+CC		= cc
+RM		= rm -f
 CFLAGS	= -Wall -Wextra -Werror
-
+CLIENT	= client
+SERVER	= server
+NAME	= $(CLIENT) $(SERVER)
+CLIENTB	= client_bonus
+SERVERB	= server_bonus
+BONUS	= $(CLIENTB) $(SERVERB)
+SRCS	= ./mandatory/client.c
+SRCS2	= ./mandatory/server.c
+SRCSB	= ./bonus/client_bonus.C
+SRCSB2	= ./bonus/server_bonus.c
+OBJS	= $(SRCS:.c=.o)
+OBJS2	= $(SRCS2:.c=.o)
+OBJSB	= $(SRCSB:.c=.o)
+OBJSB2	= $(SRCSB2:.c=.o)
+LIB_DIR	= ./libft/
 LIB	= libft
 
-NAME = ${SERVER} ${CLIENT}
+%.o:%.c
+	$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
 
-SERVER = server
+$(NAME): $(OBJS) $(OBJS2)
+	make -C $(LIB_DIR)
+	$(CC) -o $(CLIENT) $(OBJS) -L${LIB} -lft
+	$(CC) -o $(SERVER) $(OBJS2) -L${LIB} -lft
 
-CLIENT = client
+$(BONUS): $(OBJSB) $(OBJSB2)
+	make -C $(LIB_DIR)
+	$(CC) -o $(CLIENTB) $(OBJSB) -L${LIB} -lft
+	$(CC) -o $(SERVERB) $(OBJSB2) -L${LIB} -lft
 
-NAME_B = ${SERVER_B} ${CLIENT_B}
+all: $(NAME)
 
-SERVER_B = server_b
+bonus: $(BONUS)
 
-CLIENT_B = client_b
-
-${SERVER}: server.o ./libft/libft.a
-	gcc ${CFLAGS} -o ${SERVER}  server.o -L${LIB} -lft
-
-${CLIENT}: client.o ./libft/libft.a
-	gcc ${CFLAGS} -o ${CLIENT}  client.o -L${LIB} -lft
-
-${SERVER_B}: server_bonus.o ./libft/libft.a
-	gcc ${CFLAGS} -o ${SERVER}  server_bonus.o -L${LIB} -lft
-
-${CLIENT_B}: client_bonus.o ./libft/libft.a
-	gcc ${CFLAGS} -o ${CLIENT}  client_bonus.o -L${LIB} -lft
-	
-all: ${NAME}
-
-%.o: %.c
-	${CC} -c ${CFLAGS} $?
-
-./libft/libft.a:
-	make -C libft/
-	
 clean:
-	${RM} $(SRCS_OBJS) ${BONUS_OBJS}
-	make -C libft clean
+	make -C $(LIB_DIR) clean
+	$(RM) $(OBJS) $(OBJS2) $(OBJSB) $(OBJSB2)
 
 fclean: clean
-	${RM} ${NAME} ${NAME_B} ${LIB}/libft.a
+	make -C $(LIB_DIR) fclean
+	$(RM) $(CLIENT) $(SERVER) $(CLIENTB) $(SERVERB)
 
-bonus: ${NAME_B}
+re: 
+	make fclean
+	make all
 
-re: fclean all
-
-.PHONY: all libft clean fclean re bonus
+.PHONY: all clean fclean re bonus

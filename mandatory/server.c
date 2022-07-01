@@ -6,7 +6,7 @@
 /*   By: kyungsle <kyungsle@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 15:38:57 by kyungsle          #+#    #+#             */
-/*   Updated: 2022/07/01 20:07:34 by kyungsle         ###   ########.fr       */
+/*   Updated: 2022/07/01 22:20:44 by kyungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,16 @@ void	get_with_bit(int sig)
 	{
 		write(1, &(g_signal.msg), 1);
 		g_signal.size = 0;
+		if (g_signal.msg == 0)
+			kill(g_signal.pid, SIGUSR2);
 	}
 }
 
 void	server_handler(int signo, siginfo_t *info, void *context)
 {
-	(void)context;
+	(void) context;
 	g_signal.pid = info->si_pid;
 	get_with_bit(signo);
-	// kill(info->si_pid, signo);
 }
 
 int	main(void)
