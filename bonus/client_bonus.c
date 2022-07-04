@@ -6,7 +6,7 @@
 /*   By: kyungsle <kyungsle@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 23:38:40 by kyungsle          #+#    #+#             */
-/*   Updated: 2022/07/01 23:42:57 by kyungsle         ###   ########.fr       */
+/*   Updated: 2022/07/04 14:31:58 by kyungsle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	send_with_bit(int pid, char *argv)
 				if (kill(pid, SIGUSR1) == -1)
 					exit_print_error(0);
 			move++;
-			usleep(300);
+			usleep(1000);
 		}
 		i++;
 	}
